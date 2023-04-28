@@ -53,11 +53,10 @@ const SearchComponent: React.FC = () => {
 
   const deleteVector = async (id: string) => {
     try {
+      console.log("Current results", results.length);
       const resp = await axios.post("/api/pinecone/delete", { id });
-      console.log("Current result", results);
-      setResults(results.filter((result) => result.id !== id));
-      console.log("resp", resp);
-      messageApi.success(`Deleted ${id}.`);
+      handleSearch();
+      messageApi.success(`Deleted results ${id}.`);
     } catch (error) {
       console.error("Failed to delete vector:", error);
     }
@@ -97,9 +96,11 @@ const SearchComponent: React.FC = () => {
   const handleSearch = async () => {
     setLoading(true);
     const searchResults = await executeSearch(query);
-    console.log(searchResults);
     setResults(searchResults);
     setLoading(false);
+    setTimeout(() => {
+      console.log("After search results", results.length);
+    }, 2000);
   };
 
   const columns = [
@@ -130,6 +131,7 @@ const SearchComponent: React.FC = () => {
       {contextHolder}
       <EditDialog 
         id={editingVectorId} 
+        index={index}
         doneEdit={() => setEditingVectorId("")} 
       />
       <Space>

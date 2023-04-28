@@ -7,12 +7,12 @@ import { Input, Button, Spin, Table, Alert, message, Space, Select, Modal, Form 
 import { useQuery } from "react-query";
 const { TextArea } = Input;
 
-const EditDialog = (props: { id: string, doneEdit: Function}) => {
+const EditDialog = (props: { id: string, index: string, doneEdit: Function}) => {
 
   const fetchVectorData = async () => {
-    const res = await axios.post(`/api/pinecone/get`, {id: props.id});
-    console.log("Fetch vector", res.data);
     if (props.id === 'new') return [{key: 'text', value:''}];
+    const res = await axios.post(`/api/pinecone/get`, {id: props.id, index: props.index});
+    console.log("Fetch vector", res.data);
     if (!res.data.metadata) return [];
     const keys = Object.keys(res.data.metadata).filter((key) => key !== "id");
     const kv = keys.map((key) => ({
@@ -33,8 +33,8 @@ const EditDialog = (props: { id: string, doneEdit: Function}) => {
     const text = form.getFieldValue('text');
     try {
       //const deleteResult = await axios.post("/api/pinecone/delete", { id });
-      const insertResult = await axios.post("/api/pinecone/upsert", { id, text });
-      messageApi.success(`Edited ${id}.`);
+      const insertResult = await axios.post("/api/pinecone/upsert", { id, index: props.index, text });
+      messageApi.success(`Edited ${JSON.stringify(insertResult.data)}.`);
       props.doneEdit();
     } catch (error) {
       messageApi.error(`Failed to edit ${id}.`);

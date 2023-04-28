@@ -1,5 +1,5 @@
 # Pinecone-UI
-A simple and elegant UI for the pinecone vector database.
+A simple UI for the Pinecone Vector Database management.
 ## How to use:
 1. Clone the project
 2. `yarn install`
