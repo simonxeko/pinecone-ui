@@ -7,9 +7,16 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
+    "@pinecone-database/pinecone": "^0.0.12",
+    "antd": "^5.4.2",
+    "dotenv": "^16.0.3",
     "next": "latest",
+    "openai": "^3.2.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
+    "uuid4": "^2.0.3"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",
